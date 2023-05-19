@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import { createProduct, getCategories } from "../actions/productAction"
+import { createProduct, getCategories, uploadImage } from "../actions/productAction"
 
 export default function ProductForm(){
+    const [source, setSource] = useState("")
     const [categories, setCategories] = useState([])
     const [product, setProduct] = useState({
         "title": "",
@@ -14,7 +15,7 @@ export default function ProductForm(){
     })
 
     const handleInputChange = (e) => {
-        console.log(e.target.name)
+        console.log(e)
         const {name, value} = e.target
         setProduct(prevState => {
             return{
@@ -23,13 +24,31 @@ export default function ProductForm(){
             }
         })
     }
+
+    const onFileUploadHandler = (e) => {
+        console.log(e.target.files[0])
+        setSource(e.target.files[0])
+    }
     
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("handle submit")
-        console.log(product)
-        createProduct(product)
-        .then(response => alert("sucess"))
+        // covert image to formData
+        const formData = new FormData()
+        formData.append("file", source)
+        uploadImage(formData)
+        .then(response => {
+            product.images = [response.data.location]
+            console.log(product)
+            createProduct(product)
+            .then(resp => {
+                console.log(resp)
+                alert("Insert Product Sucess")
+            })
+        })
+       
+        // createProduct(product)
+        // .then(response => alert("sucess"))
     }
     useEffect(() => {
         getCategories()
@@ -86,7 +105,20 @@ export default function ProductForm(){
                     ))
                 }
             </select>
-            
+            <div className="mb-3">
+                <label htmlFor="images" className="form-label">Upload Image</label>
+                <input 
+                    type="file" 
+                    className="form-control"
+                    name="images"
+                    onChange={onFileUploadHandler}
+                />
+            </div>
+            {/* preview image */}
+            <div className="mb-3">
+                <img className="w-50" 
+                    src={source && URL.createObjectURL(source)} alt="" />
+            </div>
             <button 
                 type="submit" 
                 class="btn btn-primary mt-4 w-100"
