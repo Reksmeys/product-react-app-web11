@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { createProduct, getCategories, uploadImage } from "../actions/productAction"
 
 export default function ProductForm(){
+    const navigate = useNavigate()
     const [source, setSource] = useState("")
     const [categories, setCategories] = useState([])
     const [product, setProduct] = useState({
@@ -44,6 +46,7 @@ export default function ProductForm(){
             .then(resp => {
                 console.log(resp)
                 alert("Insert Product Sucess")
+                navigate("/")
             })
         })
        
