@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import NotFound from './pages/404';
+import ProductTable from './pages/ProductTable';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/create' element={<ProductForm />} />
+        <Route path='/datatable' element={<ProductTable />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
       <Footer />

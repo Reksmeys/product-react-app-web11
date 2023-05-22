@@ -49,9 +49,6 @@ export default function ProductForm(){
                 navigate("/")
             })
         })
-       
-        // createProduct(product)
-        // .then(response => alert("sucess"))
     }
     useEffect(() => {
         getCategories()

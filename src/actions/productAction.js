@@ -34,5 +34,11 @@ export const uploadImage = async (image) => {
     return response
 }
 
+/// MARK: get product data from api
+export const fetchProducts = async () => {
+    const resp = await fetch(`${BASE_URL}products`)
+    return resp.json()
+}
+
 
 
