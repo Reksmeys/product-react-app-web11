@@ -3,51 +3,72 @@ import DataTable from 'react-data-table-component'
 import { fetchProducts } from '../actions/productAction';
 
 export default function ProductTable() {
-    const [product, setProduct] = useState([{}])
+    const [filterProduct, setFilterProduct] = useState([{
+        images: ["https://picsum.photos/640/640?r=9542"],
+        title: "ma"
+    }])
+    const [search, setSearch] = useState("")
+    
     useEffect(() => {
         fetchProducts()
-        .then(resp => setProduct(resp))
+        .then(resp => {
+            setFilterProduct(resp)
+        })
     }, [])
+    useEffect(() => {
+        const result = filterProduct.filter(p => {
+            return p.title && p.title.toLowerCase().match(search.toLowerCase())
+        })
+        setFilterProduct(result)
+      }, [search])
     const columns = [
         {
             name: 'Product Title',
-            selector: r => r.title,
+            selector: row => row.title,
+            sortable: true,
         },
         {
             name: 'Price',
             selector: row => row.price,
+            sortable: true,
         },
         {
             name: 'Photo',
             selector: row => <img src={row.images[0]} alt="products" width={80} />,
+            sortable: true,
+        },
+        {
+            name: 'Action',
+            selector: row => (
+                <>
+                    <button 
+                        className='btn btn-primary m-2'
+                        onClick={() => alert(row.title)}
+                    >Edit</button>
+                    <button className='btn btn-danger m-2'>Delete</button>
+                </>
+            ),
+            sortable: true,
         },
     ];
-    // const data = [
-    //     {
-    //         id: 1,
-    //         t: 'Beetlejuice',
-    //         year: '1988',
-    //         price: 90
-    //     },
-    //     {
-    //         id: 2,
-    //         t: 'Ghostbusters',
-    //         year: '1984',
-    //         price: 800
-    //     },
-    //     {
-    //         id: 3,
-    //         t: 'Magic Mouse',
-    //         year: '2000',
-    //         price: 899
-    //     },
-    // ]
   return (
     <main className='container'>
         <DataTable 
             columns={columns}
-            data={product}
+            data={filterProduct}
             pagination
+            selectableRows
+            fixedHeader
+            highlightOnHover
+            subHeader
+            subHeaderComponent={
+                <input type="text" 
+                placeholder='search here' 
+                className='form-control'
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                />
+            }
         />
     </main>
   )
