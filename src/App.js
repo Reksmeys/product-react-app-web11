@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import NotFound from './pages/404';
 import ProductTable from './pages/ProductTable';
+import MyEditor from './pages/MyEditor';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/create' element={<ProductForm />} />
         <Route path='/datatable' element={<ProductTable />} />
+        <Route path='/editor' element={<MyEditor />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
       <Footer />
