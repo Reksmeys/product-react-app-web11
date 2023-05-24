@@ -40,5 +40,18 @@ export const fetchProducts = async () => {
     return resp.json()
 }
 
+/// MARK: UPATE PRODUCT BY PRODUCT ID
+export const updateProduct = async (product, id) => {
+    console.log(`${BASE_URL}products/${id}`)
+    const resp = await fetch(`${BASE_URL}products/${id}`, 
+    {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(product)
+    })
+    return resp.json()
+}
 
 

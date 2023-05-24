@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component'
 import { useNavigate } from 'react-router-dom';
 import { fetchProducts } from '../actions/productAction';
 
-export default function ProductTable() {
+export default function PT() {
     const navigate = useNavigate()
     const [filterProduct, setFilterProduct] = useState([{
         images: ["https://picsum.photos/640/640?r=9542"],
@@ -23,7 +23,6 @@ export default function ProductTable() {
         })
         setFilterProduct(result)
       }, [search])
-
     const columns = [
         {
             name: 'Product Title',
@@ -36,13 +35,13 @@ export default function ProductTable() {
             sortable: true,
         },
         {
-            name: 'Category',
-            selector: row => row.category && row.category.name,
+            name: 'Photo',
+            selector: row => <img src={row.images[0]} alt="products" width={80} style={{margin: 20}} />,
             sortable: true,
         },
         {
-            name: 'Photo',
-            selector: row => <img src={row.images[0]} alt="products" width={80} />,
+            name: 'Category',
+            selector: row => row.category && row.category.name,
             sortable: true,
         },
         {
@@ -53,7 +52,7 @@ export default function ProductTable() {
                         className='btn btn-primary m-2'
                         onClick={() => navigate("/update", {
                             state: {
-                                n_product: row
+                                nav_product: row
                             }
                         })}
                     >Edit</button>

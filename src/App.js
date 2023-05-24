@@ -15,7 +15,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/create' element={<ProductForm />} />
+        <Route path='/create' element={<ProductForm update={false} />} />
+        <Route path='/update' element={<ProductForm update={true} />} />
         <Route path='/datatable' element={<ProductTable />} />
         <Route path='/editor' element={<MyEditor />} />
         <Route path='*' element={<NotFound />} />

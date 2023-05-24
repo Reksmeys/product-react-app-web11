@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
+  const navigate = useNavigate()
   return (
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -66,17 +67,12 @@ export default function Navbar() {
                 <a class="nav-link disabled">Disabled</a>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
+            <button 
+                class="btn btn-outline-success"
+                onClick={() => navigate("/create")}
+            >
+              Insert Product
+            </button>
           </div>
         </div>
       </nav>

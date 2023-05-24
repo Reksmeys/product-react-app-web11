@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { createProduct, getCategories, uploadImage } from "../actions/productAction"
+import { useLocation, useNavigate } from "react-router-dom"
+import { createProduct, getCategories, updateProduct, uploadImage } from "../actions/productAction"
 
-export default function ProductForm(){
+export default function ProductForm({update}){
     const navigate = useNavigate()
+    const location = useLocation()
     const [source, setSource] = useState("")
     const [categories, setCategories] = useState([])
     const [product, setProduct] = useState({
+        "id": 0,
         "title": "",
         "price": 0,
         "description": "",
@@ -19,6 +21,7 @@ export default function ProductForm(){
     const handleInputChange = (e) => {
         console.log(e)
         const {name, value} = e.target
+        console.log(name, value)
         setProduct(prevState => {
             return{
                 ...prevState,
@@ -31,35 +34,62 @@ export default function ProductForm(){
         console.log(e.target.files[0])
         setSource(e.target.files[0])
     }
-    
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log("handle submit")
-        // covert image to formData
-        const formData = new FormData()
-        formData.append("file", source)
-        uploadImage(formData)
-        .then(response => {
-            product.images = [response.data.location]
+        if(update){
             console.log(product)
-            createProduct(product)
-            .then(resp => {
-                console.log(resp)
-                alert("Insert Product Sucess")
-                navigate("/")
+            updateProduct(product, product.id)
+            .then(res => {
+                console.log(res)
+                navigate("/datatable")
             })
+        }else{
+            insertProduct()
+        } 
+    }
+    const insertProduct = () => {
+        const formData = new FormData()
+            formData.append("file", source)
+            uploadImage(formData)
+            .then(response => {
+                product.images = [response.data.location]
+                console.log(product)
+                createProduct(product)
+                .then(resp => {
+                    console.log(resp)
+                    alert("Insert Product Sucess")
+                    navigate("/")
+                })
         })
     }
     useEffect(() => {
+        if(update){
+            const {n_product} = location.state
+            console.log("you want to update", location.state.n_product)
+            product.id = n_product.id
+            product.title = n_product.title
+            product.price = n_product.price
+            product.description = n_product.description
+            product.categoryId = n_product.category.id
+            product.images = n_product.images
+        }else{
+            console.log("you want to create")
+        }
         getCategories()
         .then(response => setCategories(response))
+        
     }, [])
     return(
         <form 
             className="mt-5 w-50 m-auto"
             onSubmit={handleSubmit}
         >
-            <h1 className="text-center">Create a Product</h1>
+            <h1 className="text-center">
+                {
+                    update ? "Edit a Product" : "Create a Product"
+                }
+            </h1>
             <div className="mb-3">
                 <label htmlFor="title" class="form-label">Product title</label>
                 <input 
@@ -67,6 +97,7 @@ export default function ProductForm(){
                     class="form-control"
                     placeholder="Magic Mouse"
                     name="title"
+                    value={product.title}
                     onChange={handleInputChange}
                 />
             </div>
@@ -77,6 +108,7 @@ export default function ProductForm(){
                     className="form-control"
                     placeholder="200$"
                     name="price"
+                    value={product.price}
                     onChange={handleInputChange}
                 />
             </div>
@@ -86,6 +118,7 @@ export default function ProductForm(){
                     class="form-control" 
                     rows="5"
                     name="description"
+                    value={product.description}
                     placeholder="Leave the description here"
                     onChange={handleInputChange}
                 >
@@ -97,6 +130,7 @@ export default function ProductForm(){
                 class="form-select"
                 onChange={handleInputChange}
                 name="categoryId"
+                value={product.categoryId}
             >
                 <option selected>Choose Category</option>
                 {
@@ -116,13 +150,18 @@ export default function ProductForm(){
             </div>
             {/* preview image */}
             <div className="mb-3">
-                <img className="w-50" 
-                    src={source && URL.createObjectURL(source)} alt="" />
+            {
+                console.log(product.images)
+            }
+            <img src={update ? product.images : URL.createObjectURL(source)} alt="" />
+            {/* <img src={source && URL.createObjectURL(source)}/> */}
             </div>
             <button 
                 type="submit" 
                 class="btn btn-primary mt-4 w-100"
-            >Create Product</button>
+            >{
+                update ? "Update Product" : "Create Product"
+            }</button>
         </form>
     )
 }
