@@ -30,6 +30,7 @@ export default function ProductForm({update}){
         })
     }
 
+    // choose image from their pc
     const onFileUploadHandler = (e) => {
         console.log(e.target.files[0])
         setSource(e.target.files[0])
@@ -38,12 +39,28 @@ export default function ProductForm({update}){
     const handleSubmit = (e) => {
         e.preventDefault()
         if(update){
-            console.log(product)
-            updateProduct(product, product.id)
-            .then(res => {
-                console.log(res)
-                navigate("/datatable")
-            })
+            // source !=="" : mean that user choose new photo
+            if (source !== ""){
+                const formData = new FormData()
+                formData.append("file", source)
+                uploadImage(formData)
+                .then(response => {
+                    product.images = [response.data.location]
+                    updateProduct(product, product.id)
+                    .then(res => {
+                        console.log(res)
+                        navigate("/datatable")
+                    })
+                })
+            }else{
+                // User keep old photo
+                updateProduct(product, product.id)
+                .then(res => {
+                    console.log(res)
+                    navigate("/datatable")
+                })
+            }
+            
         }else{
             insertProduct()
         } 
@@ -72,7 +89,7 @@ export default function ProductForm({update}){
             product.price = n_product.price
             product.description = n_product.description
             product.categoryId = n_product.category.id
-            product.images = n_product.images
+            product.images = [n_product.images[0]]
         }else{
             console.log("you want to create")
         }
@@ -153,8 +170,8 @@ export default function ProductForm({update}){
             {
                 console.log(product.images)
             }
-            <img src={update ? product.images : URL.createObjectURL(source)} alt="" />
-            {/* <img src={source && URL.createObjectURL(source)}/> */}
+           
+            <img src={source !== "" ? URL.createObjectURL(source) : product.images[0]}/>
             </div>
             <button 
                 type="submit" 
