@@ -6,9 +6,9 @@ export default function Navbar() {
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-            Navbar
-          </a>
+          <Link class="navbar-brand" to={"/"}>
+            Home
+          </Link>
           <button
             class="navbar-toggler"
             type="button"

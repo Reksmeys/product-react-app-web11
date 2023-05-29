@@ -60,7 +60,6 @@ export default function ProductForm({update}){
                     navigate("/datatable")
                 })
             }
-            
         }else{
             insertProduct()
         } 
@@ -81,6 +80,7 @@ export default function ProductForm({update}){
         })
     }
     useEffect(() => {
+        console.log("in use effect")
         if(update){
             const {n_product} = location.state
             console.log("you want to update", location.state.n_product)
@@ -92,10 +92,10 @@ export default function ProductForm({update}){
             product.images = [n_product.images[0]]
         }else{
             console.log("you want to create")
+            product.images = ["https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg"]
         }
         getCategories()
         .then(response => setCategories(response))
-        
     }, [])
     return(
         <form 
@@ -114,7 +114,7 @@ export default function ProductForm({update}){
                     class="form-control"
                     placeholder="Magic Mouse"
                     name="title"
-                    value={product.title}
+                    value={update ? product.title : ""}
                     onChange={handleInputChange}
                 />
             </div>
@@ -125,7 +125,7 @@ export default function ProductForm({update}){
                     className="form-control"
                     placeholder="200$"
                     name="price"
-                    value={product.price}
+                    value={update ? product.price : ""}
                     onChange={handleInputChange}
                 />
             </div>
@@ -135,7 +135,7 @@ export default function ProductForm({update}){
                     class="form-control" 
                     rows="5"
                     name="description"
-                    value={product.description}
+                    value={update ? product.description : ""}
                     placeholder="Leave the description here"
                     onChange={handleInputChange}
                 >
@@ -147,7 +147,7 @@ export default function ProductForm({update}){
                 class="form-select"
                 onChange={handleInputChange}
                 name="categoryId"
-                value={product.categoryId}
+                value={update ? product.categoryId : 0}
             >
                 <option selected>Choose Category</option>
                 {
@@ -170,7 +170,7 @@ export default function ProductForm({update}){
             {
                 console.log(product.images)
             }
-           
+            
             <img src={source !== "" ? URL.createObjectURL(source) : product.images[0]}/>
             </div>
             <button 
