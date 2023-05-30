@@ -18,7 +18,7 @@ export default function Footer() {
             <div class="col-6 col-md-2 mb-3">
                 <h5>Community</h5>
                 <p>
-                    <Link to={"https://t.me/mentors_it"}> Join 👩🏻‍💻 Community </Link>
+                    <Link to={"https://t.me/mentors_it"} className="text-decoration-none"> Join 👩🏻‍💻 Community </Link>
                 </p>
                 
             </div>

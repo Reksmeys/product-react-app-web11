@@ -37,8 +37,11 @@ function Login(props){
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(loginUser(user))
-        console.log("after dispatch", isLogin)
-        isLogin ? navigate("/") : navigate("/login")  
+        .then((res) => {
+            console.log('eis', res)
+            navigate("/")
+        })
+         
     }
     return(
         <main className="vh-100 d-flex justify-content-center align-items-center mw-100">

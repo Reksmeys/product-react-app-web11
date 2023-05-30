@@ -1,13 +1,25 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../redux/actions/authActions";
+import { fetchProfile } from "../redux/actions/profileAction";
 
 export default function Navbar() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const {profile} = useSelector(state => state.profileR)
+  const {isLogin} = useSelector(state => state.authR)
+  const {auth} = useSelector(state => state.authR)
+
+  useEffect(() => {
+    dispatch(fetchProfile(isLogin ? auth.access_token : ""))
+  }, [])
   return (
-    <header>
+    <header className="sticky-top">
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <Link class="navbar-brand" to={"/"}>
-            Home
+            <img src="https://scontent.fpnh10-1.fna.fbcdn.net/v/t1.6435-9/80017279_2500547220233420_1875036224394100736_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeFg1ifFo6ZF1FQZyuShyfaTDcnh98phrb0NyeH3ymGtvTMxKFiWTBanQExO1MVwdvN4KXskZl7-YX0x_k6Y4ti0&_nc_ohc=VCUITwXvoUAAX8Dm0DL&_nc_ht=scontent.fpnh10-1.fna&oh=00_AfCiDKqKoQjfrSkGCaHHwzrQJgghrqrLeDwBPF_6vptyow&oe=649D703D" alt="" width={50} className="rounded-circle mx-2" />
           </Link>
           <button
             class="navbar-toggler"
@@ -33,15 +45,15 @@ export default function Navbar() {
                 </Link>
               </li>
               <li class="nav-item dropdown">
-                <a
+                <Link
                   class="nav-link dropdown-toggle"
-                  href="#"
+                  to={"/profile"}
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Dropdown
-                </a>
+                  Profile
+                </Link>
                 <ul class="dropdown-menu">
                   <li>
                     <a class="dropdown-item" href="#">
@@ -56,22 +68,28 @@ export default function Navbar() {
                   <li>
                     <hr class="dropdown-divider" />
                   </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      Something else here
-                    </a>
-                  </li>
                 </ul>
               </li>
-              <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
-              </li>
+              
             </ul>
+            <Link to={"/profile"}>
+              <img 
+                src={isLogin ? profile.avatar : "https://eduport.webestica.com/assets/images/avatar/01.jpg"}
+                alt="" 
+                width={40} 
+                className="rounded-circle mx-3 my-2" />
+            </Link>
             <button 
-                class="btn btn-outline-success"
-                onClick={() => navigate("/create")}
+              class="btn btn-outline-success"
+              onClick={() => isLogin? 
+                dispatch(logout())
+                 
+                : 
+                navigate("/login")}
             >
-              Insert Product
+              {
+                isLogin ? "Logout" : "Login"
+              }
             </button>
           </div>
         </div>
