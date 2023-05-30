@@ -14,7 +14,7 @@ function Login(props){
     })
     const dispatch = useDispatch()
 	const {isLogin} = useSelector(state => state.authR)
-	const {auth} = useSelector(state => state.authR)
+	const {auth} = useSelector(state => state.authR) // authR: we defined in rootReducer
 
     const onInputChangeHanler = (e) => {
         const {name, value} = e.target
@@ -37,11 +37,8 @@ function Login(props){
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(loginUser(user))
-        .then(res => {
-            console.log("after dispatch", isLogin)
-            isLogin ? navigate("/") : navigate("/login")
-            console.log(res)
-        })
+        console.log("after dispatch", isLogin)
+        isLogin ? navigate("/") : navigate("/login")  
     }
     return(
         <main className="vh-100 d-flex justify-content-center align-items-center mw-100">

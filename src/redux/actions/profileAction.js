@@ -6,6 +6,7 @@ export const fetchProfile = (auth) => {
     return (dispatch) => {
         return axios(`${BASE_URL}auth/profile`, {
 			headers: {
+                "Content-Type": "application/json",
                 "Authorization": `Bearer ${auth}`
             }
 		})
