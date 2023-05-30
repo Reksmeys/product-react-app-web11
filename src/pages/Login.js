@@ -44,10 +44,10 @@ function Login(props){
          
     }
     return(
-        <main className="vh-100 d-flex justify-content-center align-items-center mw-100">
-                <form onSubmit={handleSubmit}>
+        <main className="vh-100 d-flex justify-content-center align-items-center">
+                <form onSubmit={handleSubmit} className="w-25">
                     {/* <img className="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" /> */}
-                    <h1 className="h3 mb-3 fw-normal mt-5">Please sign in</h1>
+                    <h1 className="h3 mb-3 mt-5">Please sign in</h1>
 
                     <div className="form-floating mb-3">
                         <input 
@@ -76,7 +76,7 @@ function Login(props){
                     </label>
                     </div>
                     <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-                    <p className="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
+                    <p className="mt-5 mb-3 text-body-secondary text-center">© 2015 - 2023</p>
                 </form>
         </main>
     )

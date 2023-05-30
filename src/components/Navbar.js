@@ -83,7 +83,6 @@ export default function Navbar() {
               class="btn btn-outline-success"
               onClick={() => isLogin? 
                 dispatch(logout())
-                 
                 : 
                 navigate("/login")}
             >

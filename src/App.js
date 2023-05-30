@@ -12,6 +12,9 @@ import Movies from './pages/Movies';
 import About from './pages/About';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import secureLocalStorage from 'react-secure-storage';
 
 function App() {
   return (

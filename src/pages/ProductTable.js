@@ -65,6 +65,19 @@ export default function ProductTable() {
     ];
   return (
     <main className='container'>
+        <section className='row'>
+            <div className='col-12 col-md-10'>
+
+            </div>
+            <div className='col-12 col-md-2 my-4'>
+            <button 
+              class="btn btn-outline-success"
+              onClick={() => navigate("/create")}
+            >
+              + Insert Product
+            </button>
+            </div>
+        </section>
         <DataTable 
             columns={columns}
             data={filterProduct}
