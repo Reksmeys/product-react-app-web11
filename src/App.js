@@ -11,6 +11,7 @@ import MyEditor from './pages/MyEditor';
 import Movies from './pages/Movies';
 import About from './pages/About';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path='/editor' element={<MyEditor />} />
           <Route path='/movies' element={<Movies />}/>
           <Route path='/about' element={<About />} />
+          <Route path='/profile' element={<Profile />} />
         </Route>
         <Route path='/login' element={<Login />} />
         <Route path='*' element={<NotFound />} />

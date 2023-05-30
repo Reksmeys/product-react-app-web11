@@ -1,16 +1,24 @@
 // create login component
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import secureLocalStorage from "react-secure-storage"
+import { loginUser } from "../redux/actions/authActions"
 
-import { useState } from "react"
+function Login(props){
 
-function Login(){
-
+    const navigate = useNavigate()
     const [user, setUser] = useState({
-        name: "",
-        password: ""
+        email: "john@mail.com",
+        password: "changeme"
     })
+    const dispatch = useDispatch()
+	const {isLogin} = useSelector(state => state.authR)
+	const {auth} = useSelector(state => state.authR)
 
     const onInputChangeHanler = (e) => {
         const {name, value} = e.target
+        console.log(user)
         setUser(prevState => 
             {
                 return{
@@ -20,9 +28,20 @@ function Login(){
             }
         )
     }
+    useEffect(() => {
+        console.log("is Login: ", isLogin)
+        console.log("auth", auth)
+        secureLocalStorage.getItem("kiki")
+    }, [])
 
-    const handleSubmit = () => {
-        // call action login
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(loginUser(user))
+        .then(res => {
+            console.log("after dispatch", isLogin)
+            isLogin ? navigate("/") : navigate("/login")
+            console.log(res)
+        })
     }
     return(
         <main className="vh-100 d-flex justify-content-center align-items-center mw-100">
@@ -34,6 +53,7 @@ function Login(){
                         <input 
                             type="email" 
                             name="email"
+                            value={user.email}
                             onChange={onInputChangeHanler}
                             className="form-control" 
                             placeholder="name@example.com" />
@@ -43,6 +63,7 @@ function Login(){
                         <input 
                             type="password"
                             name="password" 
+                            value={user.password}
                             onChange={onInputChangeHanler}
                             className="form-control"  
                             placeholder="Password" />
