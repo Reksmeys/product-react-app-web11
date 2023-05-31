@@ -2,18 +2,17 @@ import axios from "axios"
 import { BASE_URL } from "../constants/API"
 import { actionTypes } from "./actionTypes"
 
-export const fetchProfile = (auth) => {
+export const fetchUser = () => {
     return (dispatch) => {
-        return axios(`${BASE_URL}auth/profile`, {
+        return axios(`${BASE_URL}users`, {
 			headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${auth}`
+                "Content-Type": "application/json"
             }
 		})
         .then((res) => {
             if (res.status == 200){
                 dispatch({
-                    type: actionTypes.FETCH_PROFILE,
+                    type: actionTypes.FETCH_USER,
                     payload: res.data,
                 })
                 return Promise.resolve()

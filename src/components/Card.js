@@ -1,21 +1,17 @@
-// use function to create components
-
-function Card(){
-    return(
-        <div className="card">
-            <h5 className="card-header">Featured</h5>
-            <div className="card-body">
-                <img src="https://dummyimage.com/800x300/dddddd/fff.png&text=Responsive+Image" className="img-fluid" alt="..."/>
-                <h5 className="card-title">Special title treatment</h5>
-                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" className="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-    )
-}
-const heading = {
-    color: 'red',
-    textAlign: 'center'
-}
+function UserCard({users}) {
     
-export default Card
+    return (
+      users && users.map(user => (
+          <div className="col-sm-6 col-lg-4 col-xl-2" key={user.id}>
+              <div class="card h-100 border-0 shadow-sm">
+              <img src={user.avatar} class="card-img-top" alt="product" />
+              <div class="card-body">
+                  <h5 class="card-title">{user.name}</h5>
+              </div>
+              </div>
+          </div>
+      ))
+    )
+  }
+  
+  export default UserCard

@@ -5,12 +5,15 @@ import {fetchProducts} from './../redux/actions/productActions'
 import Cards from '../components/Cards'
 import LoadingView from '../components/LoadingView'
 import secureLocalStorage from 'react-secure-storage'
+import { fetchUser } from '../redux/actions/userActions'
+import UserCard from '../components/Card'
 
 export default function Home() {
 
     const dispatch = useDispatch()
     const {isLogin} = useSelector(state => state.authR)
     const {products} = useSelector(state => state.productR)
+    const {users} = useSelector(state => state.userR)
     const [limit, setLimit] = useState(12)
     const [offset, setOffset] = useState(1)
 
@@ -19,12 +22,10 @@ export default function Home() {
         console.log("is login", isLogin)
         console.log(secureLocalStorage.getItem("kiki"))
         dispatch(fetchProducts(offset, limit))  
+        dispatch(fetchUser())
     }, []);
   return (
     <Container>
-        {
-            console.log(products)
-        }
         <h1 className='h1 mt-3'>Product Collection</h1>
         <Row className='g-3 mt-3'>
             {
@@ -32,7 +33,7 @@ export default function Home() {
             }
         </Row>
         <section 
-            className='mt-3'
+            className='mt-4 text-center'
             onClick={() => {
                 setOffset(offset + 1)
                 dispatch(fetchProducts(offset, limit))
@@ -40,6 +41,12 @@ export default function Home() {
         >
             <button className='btn btn-primary text-center btn-block text-center'>Load more</button>
         </section>
+        <h1 className='h1 mt-3'>User Collection</h1>
+        <Row className='g-3 mt-3'>
+            {
+                users.length == 0 ? <LoadingView /> : <UserCard users={users} title="Little Kid" />
+            }
+        </Row>
     </Container>
   )
 }

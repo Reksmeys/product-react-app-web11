@@ -12,9 +12,7 @@ import Movies from './pages/Movies';
 import About from './pages/About';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import secureLocalStorage from 'react-secure-storage';
+import Category from './pages/Category';
 
 function App() {
   return (
@@ -28,6 +26,8 @@ function App() {
           <Route path='/editor' element={<MyEditor />} />
           <Route path='/movies' element={<Movies />}/>
           <Route path='/about' element={<About />} />
+          <Route path='/products' element={<Category />} />
+          {/* <Route path='/category/:id' element={<Category />} /> */}
           <Route path='/profile' element={<Profile />} />
         </Route>
         <Route path='/login' element={<Login />} />

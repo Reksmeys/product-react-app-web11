@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../redux/actions/authActions";
+import { fetchCategory } from "../redux/actions/categoryActions";
 import { fetchProfile } from "../redux/actions/profileAction";
 
 export default function Navbar() {
@@ -10,9 +11,11 @@ export default function Navbar() {
   const {profile} = useSelector(state => state.profileR)
   const {isLogin} = useSelector(state => state.authR)
   const {auth} = useSelector(state => state.authR)
+  const {categories} = useSelector(state => state.cateR)
 
   useEffect(() => {
     dispatch(fetchProfile(isLogin ? auth.access_token : ""))
+    dispatch(fetchCategory())
   }, [])
   return (
     <header className="sticky-top">
@@ -44,33 +47,11 @@ export default function Navbar() {
                   Data Table
                 </Link>
               </li>
-              <li class="nav-item dropdown">
-                <Link
-                  class="nav-link dropdown-toggle"
-                  to={"/profile"}
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Profile
+              <li class="nav-item">
+                <Link class="nav-link" to={"/products"}>
+                  Products
                 </Link>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      Action
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <hr class="dropdown-divider" />
-                  </li>
-                </ul>
               </li>
-              
             </ul>
             <Link to={"/profile"}>
               <img 
