@@ -98,87 +98,89 @@ export default function ProductForm({update}){
         .then(response => setCategories(response))
     }, [])
     return(
-        <form 
-            className="mt-5 w-50 m-auto"
-            onSubmit={handleSubmit}
-        >
-            <h1 className="text-center">
-                {
-                    update ? "Edit a Product" : "Create a Product"
-                }
-            </h1>
-            <div className="mb-3">
-                <label htmlFor="title" class="form-label">Product title</label>
-                <input 
-                    type="text" 
-                    class="form-control"
-                    placeholder="Magic Mouse"
-                    name="title"
-                    value={update ? product.title : ""}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="price" className="form-label">Price</label>
-                <input 
-                    type="number" 
-                    className="form-control"
-                    placeholder="200$"
-                    name="price"
-                    value={update ? product.price : ""}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="description" class="form-label">Description</label>
-                <textarea 
-                    class="form-control" 
-                    rows="5"
-                    name="description"
-                    value={update ? product.description : ""}
-                    placeholder="Leave the description here"
-                    onChange={handleInputChange}
+        <main className="container">
+            <div className="row">
+                <form 
+                    className="mt-5 m-auto col-12 col-md-6"
+                    onSubmit={handleSubmit}
                 >
+                    <h1 className="text-center">
+                        {
+                            update ? "Edit a Product" : "Create a Product"
+                        }
+                    </h1>
+                    <div className="mb-3">
+                        <label htmlFor="title" class="form-label">Product title</label>
+                        <input 
+                            type="text" 
+                            class="form-control"
+                            placeholder="Magic Mouse"
+                            name="title"
+                            value={update ? product.title : ""}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="price" className="form-label">Price</label>
+                        <input 
+                            type="number" 
+                            className="form-control"
+                            placeholder="200$"
+                            name="price"
+                            value={update ? product.price : ""}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="description" class="form-label">Description</label>
+                        <textarea 
+                            class="form-control" 
+                            rows="5"
+                            name="description"
+                            value={update ? product.description : ""}
+                            placeholder="Leave the description here"
+                            onChange={handleInputChange}
+                        >
+                        </textarea>
+                    </div>
 
-                </textarea>
+                    <select 
+                        class="form-select"
+                        onChange={handleInputChange}
+                        name="categoryId"
+                        value={update ? product.categoryId : 0}
+                    >
+                        <option selected>Choose Category</option>
+                        {
+                            categories.map(cat => (
+                                <option value={cat.id}>{cat.name}</option>
+                            ))
+                        }
+                    </select>
+                    <div className="mb-3 mt-3">
+                        <label htmlFor="images" className="form-label">Upload Image</label>
+                        <input 
+                            type="file" 
+                            className="form-control"
+                            name="images"
+                            onChange={onFileUploadHandler}
+                        />
+                    </div>
+                    {/* preview image */}
+                    <div className="mb-3">
+                    <div className="my-3 m-auto text-center">
+                        <img src={source !== "" ? URL.createObjectURL(source) : product.images[0]} className="w-75 mt-3" />
+                    </div>
+                    
+                    </div>
+                    <button 
+                        type="submit" 
+                        class="btn btn-primary mt-4 w-100"
+                    >{
+                        update ? "Update Product" : "Create Product"
+                    }</button>
+                </form>
             </div>
-
-            <select 
-                class="form-select"
-                onChange={handleInputChange}
-                name="categoryId"
-                value={update ? product.categoryId : 0}
-            >
-                <option selected>Choose Category</option>
-                {
-                    categories.map(cat => (
-                        <option value={cat.id}>{cat.name}</option>
-                    ))
-                }
-            </select>
-            <div className="mb-3">
-                <label htmlFor="images" className="form-label">Upload Image</label>
-                <input 
-                    type="file" 
-                    className="form-control"
-                    name="images"
-                    onChange={onFileUploadHandler}
-                />
-            </div>
-            {/* preview image */}
-            <div className="mb-3">
-            {
-                console.log(product.images)
-            }
-            
-            <img src={source !== "" ? URL.createObjectURL(source) : product.images[0]}/>
-            </div>
-            <button 
-                type="submit" 
-                class="btn btn-primary mt-4 w-100"
-            >{
-                update ? "Update Product" : "Create Product"
-            }</button>
-        </form>
+        </main>
     )
 }

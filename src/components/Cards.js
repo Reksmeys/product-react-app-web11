@@ -5,8 +5,7 @@ function Cards({products}) {
             <div class="card h-100 border-0 shadow-sm">
             <img src={product.images[0]} class="card-img-top" alt="product" />
             <div class="card-body">
-                <h5 class="card-title">{product.title}</h5>
-                
+                <h5 class="card-title">{product.title}</h5>   
             </div>
             </div>
         </div>

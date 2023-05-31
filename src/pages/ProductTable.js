@@ -42,7 +42,7 @@ export default function ProductTable() {
         },
         {
             name: 'Photo',
-            selector: row => <img src={row.images[0]} alt="products" width={80} />,
+            selector: row => <img src={row.images[0]} alt="products" width={80} className="m-3" />,
             sortable: true,
         },
         {
