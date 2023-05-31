@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-
 function Cards({products}) {
     
   return (
     products && products.map(product => (
-        <div className="col-sm-6 col-lg-4 col-xl-3">
+        <div className="col-sm-6 col-lg-4 col-xl-2" key={product.id}>
             <div class="card h-100 border-0 shadow-sm">
             <img src={product.images[0]} class="card-img-top" alt="product" />
             <div class="card-body">

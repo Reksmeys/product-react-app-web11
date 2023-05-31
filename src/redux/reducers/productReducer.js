@@ -4,9 +4,10 @@ const initialState = {
     products: []
 }
 export const productReducer = (state = initialState, action) => {
-    switch(action.type){
+    const {type, payload} = action
+    switch(type){
         case actionTypes.FETCH_PRODUCTS: 
-        return{ ...state, products: action.payload }
+        return{ ...state, products: state.products.concat(payload) }
         default: 
         return state
     }
