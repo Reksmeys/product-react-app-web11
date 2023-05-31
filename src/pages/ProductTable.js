@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchProducts } from '../actions/productAction';
+import { deleteProduct } from '../redux/actions/productActions';
 
 export default function ProductTable() {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [filterProduct, setFilterProduct] = useState([{
         images: ["https://picsum.photos/640/640?r=9542"],
-        title: "ma"
+        title: "Magic Mouse"
     }])
     const [search, setSearch] = useState("")
     
@@ -57,7 +60,12 @@ export default function ProductTable() {
                             }
                         })}
                     >Edit</button>
-                    <button className='btn btn-danger m-2'>Delete</button>
+                    <button 
+                        className='btn btn-danger m-2'
+                        onClick={() => {
+                            dispatch(deleteProduct(15))
+                        }}
+                    >Delete</button>
                 </>
             ),
             sortable: true,

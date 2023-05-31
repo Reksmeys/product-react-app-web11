@@ -36,3 +36,27 @@ export const fetchProductCategory = (id) => {
         })
     }
 }
+
+export const deleteProduct = (id) => {
+    return (dispatch) => {
+        return axios(`${BASE_URL}products/${id}`, {
+            method: "DELETE",
+			headers: {
+                "Content-Type": "application/json"
+            }
+		})
+        .then((res) => {
+            if (res.status == 200){
+                dispatch({
+                    type: actionTypes.DELETE_PRODUCT,
+                    payload: id
+                })
+                return Promise.resolve()
+            }
+            
+        })
+        .catch(er => {
+            console.log("err", er)
+        })
+    }
+}

@@ -11,11 +11,9 @@ export default function Navbar() {
   const {profile} = useSelector(state => state.profileR)
   const {isLogin} = useSelector(state => state.authR)
   const {auth} = useSelector(state => state.authR)
-  const {categories} = useSelector(state => state.cateR)
 
   useEffect(() => {
     dispatch(fetchProfile(isLogin ? auth.access_token : ""))
-    dispatch(fetchCategory())
   }, [])
   return (
     <header className="sticky-top">
@@ -62,7 +60,7 @@ export default function Navbar() {
             </Link>
             <button 
               class="btn btn-outline-success"
-              onClick={() => isLogin? 
+              onClick={() => isLogin ? 
                 dispatch(logout())
                 : 
                 navigate("/login")}

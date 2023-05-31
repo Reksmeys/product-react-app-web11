@@ -10,6 +10,8 @@ export const productReducer = (state = initialState, action) => {
             return{ ...state, products: state.products.concat(payload) }
         case actionTypes.FETCH_PRODUCT_BY_CATEGORY:
             return{...state, products: payload}
+        case actionTypes.DELETE_PRODUCT: 
+            return{...state, products: state.products.filter(i => i.id !== payload.id) }
         default: 
         return state
     }

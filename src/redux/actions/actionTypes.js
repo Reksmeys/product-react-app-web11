@@ -6,5 +6,6 @@ export const actionTypes = {
     FETCH_PROFILE: "fetch_profile",
     FETCH_USER: "fetch_user",
     FETCH_CATEGORY: "fetch_category",
-    FETCH_PRODUCT_BY_CATEGORY: "fetch_product_by_category"
+    FETCH_PRODUCT_BY_CATEGORY: "fetch_product_by_category",
+    DELETE_PRODUCT: "delete_product"
 }
