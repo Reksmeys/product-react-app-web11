@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../redux/actions/authActions";
 import { fetchCategory } from "../redux/actions/categoryActions";
 import { fetchProfile } from "../redux/actions/profileAction";
@@ -36,28 +36,44 @@ export default function Navbar() {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <Link class="nav-link active" aria-current="page" to={"/editor"}>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  } 
+                  to={"/editor"}>
                   Editor
-                </Link>
+                </NavLink>
               </li>
               <li class="nav-item">
-                <Link class="nav-link" to={"/datatable"}>
+                <NavLink 
+                  className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                  } 
+                 to={"/datatable"}>
                   Data Table
-                </Link>
+                </NavLink>
               </li>
               <li class="nav-item">
-                <Link class="nav-link" to={"/products"}>
+                <NavLink 
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  } 
+                  to={"/products"}>
                   Products
-                </Link>
+                </NavLink>
               </li>
             </ul>
-            <Link to={"/profile"}>
+            <NavLink 
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                } 
+              to={"/profile"}>
               <img 
                 src={isLogin ? profile.avatar : "https://eduport.webestica.com/assets/images/avatar/01.jpg"}
                 alt="" 
                 width={40} 
                 className="rounded-circle mx-3 my-2" />
-            </Link>
+            </NavLink>
             <button 
               class="btn btn-outline-success"
               onClick={() => isLogin ? 
